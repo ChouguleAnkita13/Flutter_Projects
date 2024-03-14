@@ -64,14 +64,20 @@ class _ProductListState extends State<ProductList> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(widget.prodList[idx]["imgs"]))),
-                    child: Image.asset(
-                      widget.prodList[idx]["imgs"],
-                      fit: BoxFit.cover,
-                      height: 200,
+                  GestureDetector(
+                    onTap: (){
+                        setState(() {
+                              selectedOrder=widget.prodList[idx];
+                            });
+                            Navigator.of(context).push(MaterialPageRoute(
+                         builder: (context)=>OrderConfirm(selectedOrder:selectedOrder)));
+                    },
+                    child: SizedBox(
+                      child: Image.asset(
+                        widget.prodList[idx]["imgs"],
+                        fit: BoxFit.cover,
+                        height: 200,
+                      ),
                     ),
                   ),
                   Container(
@@ -116,26 +122,23 @@ class _ProductListState extends State<ProductList> {
                       margin: const EdgeInsets.only(left: 5,bottom: 5,right: 5),
                       child: TextButton(
                           onPressed: () {
-                            setState(() {
-                              selectedOrder=widget.prodList[idx];
-                            });
-                            Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context)=>OrderConfirm(selectedOrder:selectedOrder)));
+                            
                           },
                           style: TextButton.styleFrom(
                             fixedSize: const Size(160, 35),
-                            backgroundColor: const Color.fromRGBO(12, 43, 99, 1),
-                            shape: RoundedRectangleBorder(                       
+                            
+                            shape: RoundedRectangleBorder(         
+                              side:const BorderSide(color:  Color.fromRGBO(12, 43, 99, 1),width: 2)      ,        
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),
                           child: Text(
-                            "BUY NOW",
+                            "ADD TO Cart",
                             style: GoogleFonts.poppins(
                               textStyle: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: Color.fromRGBO(255, 255, 255, 1),
+                                color: Color.fromRGBO(12, 43, 99, 1),
                               ),
                             ),
                           )),

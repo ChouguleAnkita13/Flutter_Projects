@@ -1,17 +1,215 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bitcoin_icons/bitcoin_icons.dart';
+import 'package:jewellery_app/your_order.dart';
 
 class OrderConfirm extends StatefulWidget {
-  const OrderConfirm(
-      {super.key,required this.selectedOrder});
- final Map selectedOrder;
+  const OrderConfirm({super.key, required this.selectedOrder});
+  final Map selectedOrder;
   @override
   State<OrderConfirm> createState() {
     return _OrderConfirmState();
   }
 }
+
 class _OrderConfirmState extends State<OrderConfirm> {
+  List orderList = [];
+  TextEditingController addressController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+
+  void showBottomSheet() {
+    showModalBottomSheet(
+        backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
+          ),
+        ),
+        isScrollControlled: true,
+        isDismissible: true,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: EdgeInsets.only(
+                left: 15,
+                right: 15,
+                //To avoid the keyboard overlap the screen
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Confirm Order",
+                  style: GoogleFonts.quicksand(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w700,
+                    color: const Color.fromRGBO(12, 43, 99, 1),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: Text("Delivery Address",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color.fromRGBO(0, 0, 0, 1))),
+                        ),
+                        Expanded(
+                          child: Container(
+                            color: Colors.white,
+                            height: 40,
+                            child: TextFormField(
+                              controller: addressController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                    borderSide: BorderSide(
+                                        color: Color.fromRGBO(12, 43, 99, 1),
+                                        width: 0.5)),
+                              ),
+                              cursorColor: const Color.fromRGBO(12, 43, 99, 1),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: Text("Quantity",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color.fromRGBO(0, 0, 0, 1))),
+                        ),
+                        Expanded(
+                          child: Container(
+                            color: Colors.white,
+                            height: 40,
+                            child: TextFormField(
+                              controller: quantityController,
+                              decoration: const InputDecoration(
+                                hintText: "1",
+                                hintStyle: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromRGBO(0, 0, 0, 1)),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                    borderSide: BorderSide(
+                                        color: Color.fromRGBO(12, 43, 99, 1),
+                                        width: 0.5)),
+                              ),
+                              cursorColor: const Color.fromRGBO(12, 43, 99, 1),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: Text("Total Amount",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color.fromRGBO(0, 0, 0, 1))),
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 40,
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                  color: const Color.fromRGBO(12, 43, 99, 1),
+                                  width: 0.1),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5)),
+                            ),
+                            child: Text('${widget.selectedOrder["price"]}',
+                                style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: const Color.fromRGBO(0, 0, 0, 1))),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      orderList.add({
+                        "name": widget.selectedOrder["name"],
+                        "imgs": widget.selectedOrder["imgs"],
+                        'quantity': quantityController.text,
+                        "famount":'${widget.selectedOrder["price"] * (int.tryParse(quantityController.text))}'                          
+                      });
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                         builder: (context)=>YourOrder(orderList:orderList)));
+                    });
+                 
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    fixedSize: const Size(300, 40),
+                    backgroundColor: const Color.fromRGBO(12, 43, 99, 1),
+                  ),
+                  child: Text(
+                    "Confirm",
+                    style: GoogleFonts.inter(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: const Color.fromRGBO(255, 255, 255, 1),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,68 +243,99 @@ class _OrderConfirmState extends State<OrderConfirm> {
       ),
       body: Padding(
         padding:
-            const EdgeInsets.only(top: 20, bottom: 10,left: 10,right: 10),
-        child:   Column(
+            const EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
+        child: Column(
           children: [
-             Container(
+            Container(
               width: 400,
-                height: 300,
-                      decoration: BoxDecoration(
-                          ),
-                      child: Image.asset(
-                        widget.selectedOrder['imgs'],
-                        fit: BoxFit.cover,
+              height: 300,
+              decoration: const BoxDecoration(),
+              child: Image.asset(
+                widget.selectedOrder['imgs'],
+                fit: BoxFit.cover,
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.selectedOrder["name"],
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(0, 0, 0, 1)),
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.currency_rupee,
+                      size: 21,
+                      color: Colors.black,
+                      weight: 500,
+                    ),
+                    Text(
+                      '${widget.selectedOrder["price"]}',
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                            fontSize: 21,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(0, 0, 0, 1)),
                       ),
                     ),
-               Container(
-                      
-                      child:
-                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.selectedOrder["name"],
-                            style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                  fontSize: 23,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromRGBO(0, 0, 0, 1)),
-                            ),
-                          ),
-                    const SizedBox(height: 5,),              
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.currency_rupee,
-                                size: 23,
-                                color: Colors.black,
-                                weight: 500,
-                              ),
-                              Text(
-                                '${widget.selectedOrder["price"]}',
-                                style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                      fontSize: 23,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromRGBO(0, 0, 0, 1)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  width: 300,
+                  child: Text(
+                    "Jewelry, in its myriad forms, epitomizes artistry and expression, ranging from classic diamonds to vibrant gemstones, each piece a testament to culture, creativity, and personal flair, captivating hearts and igniting imaginations worldwide.",
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(119, 119, 119, 1)),
                     ),
-                   
-       
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Center(
+                  child: TextButton(
+                      onPressed: () {
+                        showBottomSheet();
+                      },
+                      style: TextButton.styleFrom(
+                        fixedSize: const Size(300, 40),
+                        backgroundColor: const Color.fromRGBO(12, 43, 99, 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        "BUY NOW",
+                        style: GoogleFonts.poppins(
+                          textStyle: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                          ),
+                        ),
+                      )),
+                )
+              ],
+            ),
+            // ),
           ],
         ),
-        
-     
       ),
-      //     );
-      //   })),
-      // ),
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
@@ -126,7 +355,10 @@ class _OrderConfirmState extends State<OrderConfirm> {
                 label: 'Category'),
             BottomNavigationBarItem(
                 icon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                         builder: (context)=>const YourOrder()));
+                    },
                     icon: const Icon(
                       BitcoinIcons.cart_outline,
                       color: Colors.black,

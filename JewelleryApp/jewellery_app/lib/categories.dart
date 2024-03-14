@@ -134,7 +134,7 @@ class _CategoriesState extends State<Categories>{
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 50, left: 15,right: 15),
+        padding: const EdgeInsets.only(top: 50, left: 15,right: 15),
         child: ListView.builder(
           itemCount: categoriesList.length,
           itemBuilder: ((context, index) {
@@ -169,7 +169,7 @@ class _CategoriesState extends State<Categories>{
               child: Row(
                 children: [
                   Image.asset(categoriesList[index]['product'][0]['imgs'],height: 100,width:100,fit: BoxFit.cover,),
-                  SizedBox(width: 15,),
+                  const SizedBox(width: 15,),
                   Text(
                 categoriesList[index]['type'],
                 style: GoogleFonts.poppins(
