@@ -33,8 +33,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/landing.png
-    - assets/images/style.png
+    - assets/home/
+    - assets/images/
     - assets/Necklaces/
     - assets/Rings/
     - assets/Earings/
