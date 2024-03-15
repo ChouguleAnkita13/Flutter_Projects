@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'modelClass.dart';
+import 'model_class.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as path;
+// import 'database_connection.dart';
+
+dynamic database;
 
 class ToDoApp extends StatefulWidget {
   const ToDoApp({super.key});
@@ -14,7 +19,8 @@ class ToDoApp extends StatefulWidget {
 }
 
 class _ToDoApp extends State<ToDoApp> {
-  //TextEditingControllers
+  List cardList = [];
+    //TextEditingControllers
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -22,14 +28,88 @@ class _ToDoApp extends State<ToDoApp> {
   //Global Key
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    super.initState();
+    databaseConnection();
+  }
+
+  void databaseConnection() async {
+    database = openDatabase(
+        path.join(await getDatabasesPath(), "todoappDB7.db"),
+        version: 1, onCreate: (db, version) async {
+      await db.execute('''Create table ToDoTask(
+          taskId INTEGER PRIMARY KEY AUTOINCREMENT,
+          title TEXT,
+          description TEXT,
+          date DATE
+        )''');
+    });
+    getData();
+    
+  }
+
+// insert task
+
+  Future<void> insertTask(ToDoListModel obj) async {
+    final localDB = await database;
+
+    await localDB.insert('ToDoTask', obj.todoTaskMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+// fetch tasks
+  Future getAllTask() async {
+    final localDB = await database;
+
+    List<Map<String,dynamic>> taskList = await localDB.query('ToDoTask');
+
+    return List.generate(taskList.length, (idx) {
+      return ToDoListModel(
+          taskId: taskList[idx]['taskId'],
+          title: taskList[idx]['title'],
+          description: taskList[idx]['description'],
+          date: taskList[idx]['date']);
+    });
+  }
+
+// delete
+Future<void> deleteTask(ToDoListModel obj)async{
+  final localDB=await database;
+
+  await localDB.delete(
+    'ToDoTask',
+    where:'taskId=?',
+    whereArgs:[obj.taskId]
+  );
+}
+//update
+Future updateTask(ToDoListModel obj)async{
+  final localDB=await database;
+
+  await localDB.update(
+    'ToDoTask',
+    obj.todoTaskMap(),
+    where:'taskId=?',
+    whereArgs:[obj.taskId]
+  );
+}
+
+Future getData()async{
+  List taskList=await getAllTask();
+  setState((){
+    cardList=taskList;
+  });
+}
+
 // submitTask Function
   void submitTask(bool isEdit, [ToDoListModel? toDoListModelObj]) {
     if (titleController.text.trim().isNotEmpty &&
         descriptController.text.trim().isNotEmpty &&
         dateController.text.trim().isNotEmpty) {
       if (!isEdit) {
-        setState(() {
-          cardList.add(ToDoListModel(
+        setState(() { 
+          insertTask(ToDoListModel(
               title: titleController.text,
               description: descriptController.text,
               date: dateController.text));
@@ -39,6 +119,8 @@ class _ToDoApp extends State<ToDoApp> {
           toDoListModelObj!.title = titleController.text.trim();
           toDoListModelObj.description = descriptController.text.trim();
           toDoListModelObj.date = dateController.text.trim();
+          updateTask(toDoListModelObj);
+
         });
       }
     }
@@ -53,14 +135,9 @@ class _ToDoApp extends State<ToDoApp> {
     showBottomSheet(true, toDoListModelObj);
   }
 
-//To Delete Task
-  void deleteTask(ToDoListModel toDoListModelObj) {
-    setState(() {
-      cardList.remove(toDoListModelObj);
-    });
-  }
 
 //To Clear all TextEditingcontrollers
+
   void clearController() {
     titleController.clear();
     descriptController.clear();
@@ -81,168 +158,160 @@ class _ToDoApp extends State<ToDoApp> {
         isScrollControlled: true,
         isDismissible: true,
         builder: (BuildContext context) {
-          return Padding(
-            padding: EdgeInsets.only(
-                left: 15,
-                right: 15,
-                top:15,
-                //To avoid the keyboard overlap the screen
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Create Task",
-                  style: GoogleFonts.quicksand(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: const Color.fromRGBO(0, 0, 0, 1),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                  top: 15,
+                  //To avoid the keyboard overlap the screen
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Create Task",
+                    style: GoogleFonts.quicksand(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: const Color.fromRGBO(0, 0, 0, 1),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Title",
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Title",
+                            style: GoogleFonts.quicksand(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromRGBO(89, 57, 241, 1))),
+                        TextFormField(
+                          controller: titleController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(89, 57, 241, 1),
+                                    width: 0.5)),
+                          ),
+                          cursorColor: const Color.fromRGBO(89, 57, 241, 1),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          "Description",
+                          style: GoogleFonts.quicksand(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            color: const Color.fromRGBO(89, 57, 241, 1),
+                          ),
+                        ),
+                        TextFormField(
+                          controller: descriptController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(89, 57, 241, 1),
+                                    width: 0.5)),
+                          ),
+                          cursorColor: const Color.fromRGBO(89, 57, 241, 1),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          "Date",
                           style: GoogleFonts.quicksand(
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
-                              color: const Color.fromRGBO(89, 57, 241, 1))),
-                      TextFormField(
-                        controller: titleController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                              color: const Color.fromRGBO(89, 57, 241, 1)),
+                        ),
+                        TextFormField(
+                          controller: dateController,
+                          decoration: const InputDecoration(
+                            suffixIcon: Icon(Icons.date_range_rounded),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(89, 57, 241, 1),
+                                    width: 0.5)),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              borderSide: BorderSide(
-                                  color: Color.fromRGBO(89, 57, 241, 1),
-                                  width: 0.5)),
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2024),
+                                lastDate: DateTime(2025));
+                            String formatDate =
+                                DateFormat.yMMMd().format(pickedDate!);
+                            dateController.text = formatDate;
+                          },
                         ),
-                        cursorColor: const Color.fromRGBO(89, 57, 241, 1),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Description",
-                        style: GoogleFonts.quicksand(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: const Color.fromRGBO(89, 57, 241, 1),
-                        ),
-                      ),
-                      TextFormField(
-                        controller: descriptController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              borderSide: BorderSide(
-                                  color: Color.fromRGBO(89, 57, 241, 1),
-                                  width: 0.5)),
-                        ),
-                        cursorColor: const Color.fromRGBO(89, 57, 241, 1),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Date",
-                        style: GoogleFonts.quicksand(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            color: const Color.fromRGBO(89, 57, 241, 1)),
-                      ),
-                      TextFormField(
-                        controller: dateController,
-                        decoration: const InputDecoration(
-                          suffixIcon: Icon(Icons.date_range_rounded),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              borderSide: BorderSide(
-                                  color: Color.fromRGBO(89, 57, 241, 1),
-                                  width: 0.5)),
-                        ),
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2024),
-                              lastDate: DateTime(2025));
-                          String formatDate =
-                              DateFormat.yMMMd().format(pickedDate!);
-                          dateController.text = formatDate;
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    isEdit
-                        ? submitTask(isEdit, toDoListModelObj)
-                        : submitTask(isEdit);
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    fixedSize: const Size(300, 50),
-                    backgroundColor: const Color.fromRGBO(89, 57, 241, 1),
-                  ),
-                  child: Text(
-                    "submit",
-                    style: GoogleFonts.inter(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: const Color.fromRGBO(255, 255, 255, 1),
+                      ],
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      isEdit
+                          ? submitTask(isEdit, toDoListModelObj)
+                          : submitTask(isEdit);
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      fixedSize: const Size(300, 50),
+                      backgroundColor: const Color.fromRGBO(89, 57, 241, 1),
+                    ),
+                    child: Text(
+                      "submit",
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: const Color.fromRGBO(255, 255, 255, 1),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
           );
         });
   }
 
-  List cardList = [
-    ToDoListModel(
-        title: "Implement Login Page",
-        description:
-            "Create a sleek and secure login page with email and password authentication.",
-        date: "Feb 28, 2024"),
-    ToDoListModel(
-        title: "Code Review",
-        description:
-            "Review pull requests from team members and provide feedback.",
-        date: "Feb 28, 2024"),
-  ];
+  // 
 
   @override
   Widget build(BuildContext context) {
+    getData();
     return Scaffold(
       backgroundColor: const Color.fromRGBO(111, 81, 255, 1),
       body: Column(
@@ -330,6 +399,7 @@ class _ToDoApp extends State<ToDoApp> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
+                                            setState((){});
                                             editTask(cardList[index]);
                                           },
                                           child: Container(
@@ -351,7 +421,9 @@ class _ToDoApp extends State<ToDoApp> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            deleteTask(cardList[index]);
+                                            setState((){
+                                              deleteTask(cardList[index]);
+                                            });
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.all(10),
@@ -481,7 +553,7 @@ class _ToDoApp extends State<ToDoApp> {
             showBottomSheet(false);
           },
           backgroundColor: const Color.fromRGBO(89, 57, 241, 1),
-          foregroundColor: const Color.fromRGBO(255,255,255,1),
+          foregroundColor: const Color.fromRGBO(255, 255, 255, 1),
           child: const Icon(
             Icons.add,
             size: 46,
