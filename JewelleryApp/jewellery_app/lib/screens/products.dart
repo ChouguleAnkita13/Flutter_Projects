@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:bitcoin_icons/bitcoin_icons.dart';
-import 'package:jewellery_app/order_confirmation.dart';
+import 'package:jewellery_app/model/model.dart';
+import 'package:jewellery_app/screens/categories.dart';
+import 'package:jewellery_app/screens/homepage.dart';
+import 'package:jewellery_app/screens/order_confirmation.dart';
+import 'package:jewellery_app/database/database_connection.dart';
+import 'package:jewellery_app/screens/profilepage.dart';
+import 'package:jewellery_app/screens/wishlist.dart';
+import 'package:jewellery_app/screens/your_order.dart';
+
 
 class ProductList extends StatefulWidget {
   const ProductList(
@@ -15,6 +22,10 @@ class ProductList extends StatefulWidget {
 }
 class _ProductListState extends State<ProductList> {
   Map<String,dynamic> selectedOrder ={};
+  int selectedwish=-1;
+  bool isSelectedWish=false;
+  List isSelectedWishList=[];
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,15 +44,19 @@ class _ProductListState extends State<ProductList> {
             ),
           ),
         ),
-        actions: const [
-          Icon(
+        actions:  [
+          const Icon(
             Icons.notifications_none_outlined,
             color: Color.fromRGBO(51, 51, 51, 1),
             size: 24,
           ),
-          Icon(Icons.favorite_border,
-              color: Color.fromRGBO(51, 51, 51, 1), size: 24),
-          SizedBox(
+          IconButton(
+            onPressed: (){    Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context)=>const WishList()));},
+        icon: const Icon(Icons.favorite_border,
+                color: Color.fromRGBO(51, 51, 51, 1), size: 24),
+          ),
+          const SizedBox(
             width: 10,
           ),
         ],
@@ -54,9 +69,11 @@ class _ProductListState extends State<ProductList> {
             spacing: 8,
             runSpacing: 8,
             children: List.generate(widget.prodList.length,(idx){
+              //added false in list for toggling logic
+              isSelectedWishList.add(false);
               return   Container(
               width: 170,
-              height: 300,
+              height: 330,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: const Color.fromRGBO(255, 255, 255, 1),
@@ -95,8 +112,7 @@ class _ProductListState extends State<ProductList> {
                                 color: Color.fromRGBO(0, 0, 0, 1)),
                           ),
                         ),
-                  const SizedBox(height: 5,),
-            
+                                
                         Row(
                           children: [
                             const Icon(
@@ -111,6 +127,31 @@ class _ProductListState extends State<ProductList> {
                                     fontWeight: FontWeight.w500,
                                     color: Color.fromRGBO(0, 0, 0, 1)),
                               ),
+                            ),
+                            const Spacer(),
+                            IconButton(
+                                 onPressed: () {
+                                    setState(() {
+                                      isSelectedWishList[idx] =
+                                          !isSelectedWishList[idx];
+                                    });
+                                    if (isSelectedWishList[idx]) {
+//inserted wish in database table
+                                      insertWish(WishListModel(
+                                          name: widget.prodList[idx]['name'],
+                                          imgs: widget.prodList[idx]['imgs'],
+                                          price: widget.prodList[idx]['price']));
+                                      print("added");
+                                    } else {
+                                      print("removed");
+                                      setState(() {
+                                      deleteWish(widget.prodList[idx]);                                      
+                                      });
+                                    }
+                                  },icon: isSelectedWishList[idx]
+                                      ? const Icon(Icons.favorite,
+                                          color: Colors.red)
+                                      : const Icon(Icons.favorite_border_outlined),
                             ),
                           ],
                         ),
@@ -161,32 +202,41 @@ class _ProductListState extends State<ProductList> {
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.black,
           unselectedItemColor: Colors.black,
-          // unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
-          // selectedLabelStyle:const TextStyle(decoration: TextDecoration.underline,fontWeight: FontWeight.w700) ,
-          items: [
+            items: [
             BottomNavigationBarItem(
                 icon: IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.home_outlined)),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const HomePage()));
+                    },
+                    icon: const Icon(Icons.home_outlined)),
                 label: 'Home'),
             BottomNavigationBarItem(
                 icon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Categories()));
+                    },
                     icon: const Icon(Icons.category_outlined)),
                 label: 'Category'),
             BottomNavigationBarItem(
                 icon: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      BitcoinIcons.cart_outline,
-                      color: Colors.black,
-                    )),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const YourOrder()));
+                    },
+                    icon: const Icon(Icons.shopping_cart_outlined)),
                 label: 'Your order'),
             BottomNavigationBarItem(
                 icon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ProfilePage()));
+                    },
                     icon: const Icon(Icons.person_3_outlined)),
                 label: 'Profile'),
           ]),
+    
     );
   }
 }

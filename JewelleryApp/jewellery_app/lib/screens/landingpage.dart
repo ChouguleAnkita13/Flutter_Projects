@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jewellery_app/homepage.dart';
+import 'package:jewellery_app/screens/homepage.dart';
+
 
 class LandingPage extends StatefulWidget{
   const LandingPage({super.key});

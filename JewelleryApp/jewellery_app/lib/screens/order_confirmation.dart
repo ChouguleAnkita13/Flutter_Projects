@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:bitcoin_icons/bitcoin_icons.dart';
-import 'package:jewellery_app/your_order.dart';
+import 'package:jewellery_app/database/database_connection.dart';
+import 'package:jewellery_app/model/model.dart';
+import 'package:jewellery_app/screens/wishlist.dart';
+
+import 'package:jewellery_app/screens/your_order.dart';
+import 'package:jewellery_app/screens/homepage.dart';
+import 'package:jewellery_app/screens/categories.dart';
+import 'package:jewellery_app/screens/profilepage.dart';
 
 class OrderConfirm extends StatefulWidget {
   const OrderConfirm({super.key, required this.selectedOrder});
@@ -13,7 +19,7 @@ class OrderConfirm extends StatefulWidget {
 }
 
 class _OrderConfirmState extends State<OrderConfirm> {
-  List orderList = [];
+
   TextEditingController addressController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -173,17 +179,15 @@ class _OrderConfirmState extends State<OrderConfirm> {
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      orderList.add({
-                        "name": widget.selectedOrder["name"],
-                        "imgs": widget.selectedOrder["imgs"],
-                        'quantity': quantityController.text,
-                        "famount":'${widget.selectedOrder["price"] * (int.tryParse(quantityController.text))}'                          
-                      });
-
-                      Navigator.of(context).push(MaterialPageRoute(
-                         builder: (context)=>YourOrder(orderList:orderList)));
+//inserted order in database table                    
+                      insertYourOrder(YourOrderModel(name: widget.selectedOrder["name"],
+                       imgs:  widget.selectedOrder["imgs"],
+                       qty: int.tryParse(quantityController.text)!,
+                       amount: widget.selectedOrder["price"] * (int.tryParse(quantityController.text))
+                       ));
+                     
+                      Navigator.of(context).pop();
                     });
-                 
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -228,112 +232,118 @@ class _OrderConfirmState extends State<OrderConfirm> {
             ),
           ),
         ),
-        actions: const [
-          Icon(
+        actions: [
+          const Icon(
             Icons.notifications_none_outlined,
             color: Color.fromRGBO(51, 51, 51, 1),
             size: 24,
           ),
-          Icon(Icons.favorite_border,
-              color: Color.fromRGBO(51, 51, 51, 1), size: 24),
-          SizedBox(
+          IconButton(
+            onPressed: (){    Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context)=>const WishList()));},
+        icon: const Icon(Icons.favorite_border,
+                color: Color.fromRGBO(51, 51, 51, 1), size: 24),
+          ),
+          const SizedBox(
             width: 10,
           ),
         ],
       ),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
-        child: Column(
-          children: [
-            Container(
-              width: 400,
-              height: 300,
-              decoration: const BoxDecoration(),
-              child: Image.asset(
-                widget.selectedOrder['imgs'],
-                fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 20, bottom: 10, left: 10, right: 10),
+          child: Column(
+            children: [
+              Container(
+                width: 400,
+                height: 300,
+                decoration: const BoxDecoration(),
+                child: Image.asset(
+                  widget.selectedOrder['imgs'],
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.selectedOrder["name"],
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromRGBO(0, 0, 0, 1)),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.currency_rupee,
-                      size: 21,
-                      color: Colors.black,
-                      weight: 500,
-                    ),
-                    Text(
-                      '${widget.selectedOrder["price"]}',
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(0, 0, 0, 1)),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  width: 300,
-                  child: Text(
-                    "Jewelry, in its myriad forms, epitomizes artistry and expression, ranging from classic diamonds to vibrant gemstones, each piece a testament to culture, creativity, and personal flair, captivating hearts and igniting imaginations worldwide.",
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.selectedOrder["name"],
                     style: GoogleFonts.poppins(
                       textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromRGBO(119, 119, 119, 1)),
+                          fontSize: 23,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(0, 0, 0, 1)),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Center(
-                  child: TextButton(
-                      onPressed: () {
-                        showBottomSheet();
-                      },
-                      style: TextButton.styleFrom(
-                        fixedSize: const Size(300, 40),
-                        backgroundColor: const Color.fromRGBO(12, 43, 99, 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.currency_rupee,
+                        size: 21,
+                        color: Colors.black,
+                        weight: 500,
                       ),
-                      child: Text(
-                        "BUY NOW",
+                      Text(
+                        '${widget.selectedOrder["price"]}',
                         style: GoogleFonts.poppins(
                           textStyle: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(255, 255, 255, 1),
+                              fontSize: 21,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromRGBO(0, 0, 0, 1)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: 300,
+                    child: Text(
+                      "Jewelry, in its myriad forms, epitomizes artistry and expression, ranging from classic diamonds to vibrant gemstones, each piece a testament to culture, creativity, and personal flair, captivating hearts and igniting imaginations worldwide.",
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Color.fromRGBO(119, 119, 119, 1)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Center(
+                    child: TextButton(
+                        onPressed: () {
+                          showBottomSheet();
+                        },
+                        style: TextButton.styleFrom(
+                          fixedSize: const Size(300, 40),
+                          backgroundColor: const Color.fromRGBO(12, 43, 99, 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                      )),
-                )
-              ],
-            ),
-            // ),
-          ],
+                        child: Text(
+                          "BUY NOW",
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromRGBO(255, 255, 255, 1),
+                            ),
+                          ),
+                        )),
+                  )
+                ],
+              ),
+              // ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -346,30 +356,38 @@ class _OrderConfirmState extends State<OrderConfirm> {
           items: [
             BottomNavigationBarItem(
                 icon: IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.home_outlined)),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const HomePage()));
+                    },
+                    icon: const Icon(Icons.home_outlined)),
                 label: 'Home'),
             BottomNavigationBarItem(
                 icon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Categories()));
+                    },
                     icon: const Icon(Icons.category_outlined)),
                 label: 'Category'),
             BottomNavigationBarItem(
                 icon: IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                         builder: (context)=>const YourOrder()));
+                          builder: (context) => const YourOrder()));
                     },
-                    icon: const Icon(
-                      BitcoinIcons.cart_outline,
-                      color: Colors.black,
-                    )),
+                    icon: const Icon(Icons.shopping_cart_outlined)),
                 label: 'Your order'),
             BottomNavigationBarItem(
                 icon: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ProfilePage()));
+                    },
                     icon: const Icon(Icons.person_3_outlined)),
                 label: 'Profile'),
           ]),
+    
     );
   }
 }
