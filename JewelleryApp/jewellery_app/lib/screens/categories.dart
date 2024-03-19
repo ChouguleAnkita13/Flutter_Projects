@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:jewellery_app/screens/products.dart';
 import 'package:jewellery_app/screens/homepage.dart';
 import 'package:jewellery_app/screens/profilepage.dart';
 import 'package:jewellery_app/screens/wishlist.dart';
 import 'package:jewellery_app/screens/your_order.dart';
 
-// import 'package:jewellery_app/database/database_connection.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key});

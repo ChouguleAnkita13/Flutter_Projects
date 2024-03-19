@@ -19,12 +19,6 @@ class WishList extends StatefulWidget {
 
 class _WishListState extends State<WishList> {
   @override
-  void initState() {
-    super.initState();
-    dbConnection();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(247, 236, 219, 1),

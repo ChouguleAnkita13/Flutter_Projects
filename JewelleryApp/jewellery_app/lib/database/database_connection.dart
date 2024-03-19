@@ -1,6 +1,5 @@
 import 'package:jewellery_app/model/model.dart';
 import 'package:jewellery_app/screens/loginpage.dart';
-
 import 'package:jewellery_app/screens/your_order.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,7 +13,7 @@ dynamic database;
 
 Future<void> dbConnection() async {
   database = await openDatabase(
-    join(await getDatabasesPath(), "jewelDB5.db"),
+    join(await getDatabasesPath(), "jewelDB6.db"),
     version: 1,
     onCreate: (db, version) async {
       await db.execute("""Create table categories(

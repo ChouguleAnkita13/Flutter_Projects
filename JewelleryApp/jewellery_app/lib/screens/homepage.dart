@@ -4,7 +4,6 @@ import 'package:jewellery_app/screens/profilepage.dart';
 import 'package:jewellery_app/screens/wishlist.dart';
 import 'package:jewellery_app/screens/your_order.dart';
 import 'package:jewellery_app/screens/products.dart';
-import 'package:jewellery_app/database/database_connection.dart';
 
 List<Map<String, dynamic>> categoriesList = [];
 
@@ -17,100 +16,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List prodList = [];
-  // final List categoriesList = [
-  //   {
-  //     "type": "Necklaces",
-  //     "product": [
-  //       {
-  //         "name": "Temple Necklace",
-  //         "imgs": "assets/Necklaces/necklace1.png",
-  //         "price": 1500,
-  //       },
-  //       {
-  //         "name": "Antique Necklace",
-  //         "imgs": "assets/Necklaces/necklace2.png",
-  //         "price": 1200,
-  //       },
-  //       {
-  //         "name": "Zircon Necklace",
-  //         "imgs": "assets/Necklaces/necklace3.png",
-  //         "price": 1650,
-  //       },
-  //       {
-  //         "name": "Kundan Necklace",
-  //         "imgs": "assets/Necklaces/necklace4.png",
-  //         "price": 1350,
-  //       },
-  //       {
-  //         "name": "Gold Mangalsutra",
-  //         "imgs": "assets/Necklaces/mangalsutra.png",
-  //         "price": 2000,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     "type": "Rings",
-  //     "product": [
-  //       {
-  //         "name": "Gold Ring",
-  //         "imgs": "assets/Rings/ring1.png",
-  //         "price": 1000,
-  //       },
-  //       {
-  //         "name": "Silver Ring",
-  //         "imgs": "assets/Rings/ring2.png",
-  //         "price": 1200,
-  //       },
-  //       {
-  //         "name": "Zircon Ring",
-  //         "imgs": "assets/Rings/ring3.png",
-  //         "price": 1150,
-  //       },
-  //       {
-  //         "name": "Antique Ring",
-  //         "imgs": "assets/Rings/ring4.png",
-  //         "price": 1500,
-  //       }
-  //     ],
-  //   },
-  //   {
-  //     "type": "Bangles",
-  //     "product": [
-  //       {
-  //         "name": "Gold Bangles",
-  //         "imgs": "assets/Bangles/bangle1.png",
-  //         "price": 12000,
-  //       },
-  //       {
-  //         "name": "Silver Bangles",
-  //         "imgs": "assets/Bangles/bangle2.png",
-  //         "price": 12000,
-  //       }
-  //     ],
-  //   },
-  //   {
-  //     "type": "Earings",
-  //     "product": [
-  //       {
-  //         "name": "Antique Earing",
-  //         "imgs": "assets/Earings/earing1.png",
-  //         "price": 1050,
-  //       },
-  //       {
-  //         "name": "Silver Earing",
-  //         "imgs": "assets/Earings/earing2.png",
-  //         "price": 1050,
-  //       }
-  //     ],
-  //   }
-  // ];
-  String selectedType = "";
 
-  @override
-  void initState() {
-    super.initState();
-    dbConnection();
-  }
+  String selectedType = "";
 
   @override
   Widget build(BuildContext context) {

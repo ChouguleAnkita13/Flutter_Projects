@@ -12,12 +12,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   dbConnection();
-  // }
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController nameController = TextEditingController();
@@ -195,12 +189,6 @@ class _SignUpState extends State<SignUp> {
                                   builder: (context) => const LoginPage(),
                                 ),
                               );
-                        // print(await getSignUpData());
-                        //                 Navigator.of(context).push(
-                        //                       MaterialPageRoute(
-                        //                         builder: (context) => const LoginPage(),
-                        //                       ),
-                        //                     );
                         nameController.clear();
                         surnameController.clear();
                         contactNoController.clear();

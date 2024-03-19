@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jewellery_app/database/database_connection.dart';
 import 'package:jewellery_app/model/model.dart';
 import 'package:jewellery_app/screens/categories.dart';
 import 'package:jewellery_app/screens/homepage.dart';
@@ -19,12 +18,6 @@ class YourOrder extends StatefulWidget {
 }
 
 class _YourOrderState extends State<YourOrder> {
-  @override
-  void initState() {
-    super.initState();
-    dbConnection();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

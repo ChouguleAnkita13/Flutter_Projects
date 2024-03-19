@@ -145,7 +145,7 @@ class _ProductListState extends State<ProductList> {
                                     } else {
                                       print("removed");
                                       setState(() {
-                                      deleteWish(widget.prodList[idx]);                                      
+                                      // deleteWish(widget.prodList[idx]);                                      
                                       });
                                     }
                                   },icon: isSelectedWishList[idx]

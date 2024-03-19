@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jewellery_app/screens/homepage.dart';
+import 'package:jewellery_app/database/database_connection.dart';
 
 
 class LandingPage extends StatefulWidget{
@@ -9,6 +10,12 @@ class LandingPage extends StatefulWidget{
   State<LandingPage> createState() => _LandingPageState();
 }
 class _LandingPageState extends State<LandingPage>{
+   @override
+  void initState() {
+    super.initState();
+    dbConnection();
+  }
+
   @override
   Widget build(BuildContext context){
     return  Scaffold(

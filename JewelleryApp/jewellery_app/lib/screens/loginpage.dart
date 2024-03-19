@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:jewelleryapp/profilepage.dart';
-//import 'package:jewelleryapp/screens/homepage.dart';
 import 'package:jewellery_app/screens/profilepage.dart';
 import 'package:jewellery_app/model/model.dart';
-import 'package:jewellery_app/database/database_connection.dart';
 
 List<ModelClass> signlist = [];
 
@@ -15,12 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-  void initState() {
-    super.initState();
-    dbConnection();
-  }
-
+ 
   bool _passwordVisible = true;
   List accountDetailsList = [];
 
@@ -45,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
           },
         ),
       ),
-      // backgroundColor: Colors.black.withOpacity(0.9),
       body: ListView(
         children: [
           Padding(
@@ -64,14 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: const InputDecoration(
                       hintText: "EMAIL",
 
-                      // hintStyle: TextStyle(color: Colors.white)
-                      //enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                      // border: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.circular(20),
-                      // ),
-                      // prefixIcon:  Icon(
-                      //   Icons.person,
-                      // ),
+                    
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -90,12 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: _passwordVisible,
                     decoration: InputDecoration(
                       hintText: " PASSWORD",
-                      // hintStyle: const TextStyle(color: Colors.white),
-                      //enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                      // border: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.circular(20),
-                      // ),
-                      // prefixIcon: const Icon( Icons.lock),
+                     
                       suffixIcon: IconButton(
                         icon: Icon(_passwordVisible
                             ? Icons.visibility
@@ -195,18 +174,15 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Text(
                             "FORGOT",
-                            // style: TextStyle(color: Colors.white),
                           ),
                           Text(
                             "PASSWORD",
-                            //style: TextStyle(color: Colors.white),
                           ),
                         ],
                       ),
                       Spacer(),
                       Text(
                         "SIGN UP",
-                        // style: TextStyle(color:Colors.white),
                       )
                     ],
                   ),
