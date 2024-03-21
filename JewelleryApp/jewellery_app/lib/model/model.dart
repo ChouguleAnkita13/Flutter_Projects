@@ -18,6 +18,27 @@ class WishListModel{
     return '{wishId:$wishId,name:$name,imgs:$imgs,price:$price}';
   }
 }
+//==================================
+class AddToCartModel{
+  int? cartId;
+  final String name;
+  final String imgs;
+  final int price;
+
+  AddToCartModel({this.cartId,required this.name,required this.imgs,required this.price});
+   Map<String,dynamic> addToCartMap(){
+    return {
+      'name':name,
+      'imgs':imgs,
+      'price':price
+    };
+  }
+    @override
+  String toString(){
+    return '{wishId:$cartId,name:$name,imgs:$imgs,price:$price}';
+  }
+
+}
 
 class YourOrderModel{
   int? orderNo;

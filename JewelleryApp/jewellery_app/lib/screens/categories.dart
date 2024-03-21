@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jewellery_app/screens/addtocart.dart';
 import 'package:jewellery_app/screens/products.dart';
 import 'package:jewellery_app/screens/homepage.dart';
 import 'package:jewellery_app/screens/profilepage.dart';
 import 'package:jewellery_app/screens/wishlist.dart';
 import 'package:jewellery_app/screens/your_order.dart';
-
 
 class Categories extends StatefulWidget {
   const Categories({super.key});
@@ -41,7 +41,6 @@ class _CategoriesState extends State<Categories> {
           const Icon(
             Icons.notifications_none_outlined,
             color: Color.fromRGBO(51, 51, 51, 1),
-            size: 24,
           ),
           IconButton(
             onPressed: () {
@@ -50,9 +49,6 @@ class _CategoriesState extends State<Categories> {
             },
             icon: const Icon(Icons.favorite_border,
                 color: Color.fromRGBO(51, 51, 51, 1), size: 24),
-          ),
-          const SizedBox(
-            width: 10,
           ),
         ],
       ),
@@ -116,7 +112,6 @@ class _CategoriesState extends State<Categories> {
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.black,
           unselectedItemColor: Colors.black,
-          
           items: [
             BottomNavigationBarItem(
                 icon: IconButton(
@@ -137,8 +132,16 @@ class _CategoriesState extends State<Categories> {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const YourOrder()));
                     },
-                    icon: const Icon(Icons.shopping_cart_outlined)),
+                    icon: const Icon(Icons.shopping_bag_outlined)),
                 label: 'Your order'),
+            BottomNavigationBarItem(
+                icon: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const AddToCart()));
+                    },
+                    icon: const Icon(Icons.shopping_cart_outlined)),
+                label: 'Cart'),
             BottomNavigationBarItem(
                 icon: IconButton(
                     onPressed: () {

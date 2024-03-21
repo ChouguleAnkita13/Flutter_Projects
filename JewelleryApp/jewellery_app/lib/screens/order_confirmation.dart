@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/database/database_connection.dart';
 import 'package:jewellery_app/model/model.dart';
+import 'package:jewellery_app/screens/addtocart.dart';
 import 'package:jewellery_app/screens/wishlist.dart';
 
 import 'package:jewellery_app/screens/your_order.dart';
@@ -370,14 +371,22 @@ class _OrderConfirmState extends State<OrderConfirm> {
                     },
                     icon: const Icon(Icons.category_outlined)),
                 label: 'Category'),
-            BottomNavigationBarItem(
+             BottomNavigationBarItem(
                 icon: IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const YourOrder()));
                     },
-                    icon: const Icon(Icons.shopping_cart_outlined)),
+                    icon: const Icon(Icons.shopping_bag_outlined)),
                 label: 'Your order'),
+            BottomNavigationBarItem(
+                icon: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const AddToCart()));
+                    },
+                    icon: const Icon(Icons.shopping_cart_outlined)),
+                label: 'Cart'),
             BottomNavigationBarItem(
                 icon: IconButton(
                     onPressed: () {

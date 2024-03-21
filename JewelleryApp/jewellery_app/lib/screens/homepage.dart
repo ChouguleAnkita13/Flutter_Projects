@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jewellery_app/screens/addtocart.dart';
 import 'package:jewellery_app/screens/categories.dart';
 import 'package:jewellery_app/screens/profilepage.dart';
 import 'package:jewellery_app/screens/wishlist.dart';
@@ -201,8 +202,16 @@ class _HomePageState extends State<HomePage> {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const YourOrder()));
                     },
-                    icon: const Icon(Icons.shopping_cart_outlined)),
+                    icon: const Icon(Icons.shopping_bag_outlined)),
                 label: 'Your order'),
+            BottomNavigationBarItem(
+                icon: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const AddToCart()));
+                    },
+                    icon: const Icon(Icons.shopping_cart_outlined)),
+                label: 'Cart'),
             BottomNavigationBarItem(
                 icon: IconButton(
                     onPressed: () {

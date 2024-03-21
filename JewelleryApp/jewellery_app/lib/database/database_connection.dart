@@ -1,4 +1,5 @@
 import 'package:jewellery_app/model/model.dart';
+import 'package:jewellery_app/screens/addtocart.dart';
 import 'package:jewellery_app/screens/loginpage.dart';
 import 'package:jewellery_app/screens/your_order.dart';
 import 'package:path/path.dart';
@@ -13,7 +14,7 @@ dynamic database;
 
 Future<void> dbConnection() async {
   database = await openDatabase(
-    join(await getDatabasesPath(), "jewelDB6.db"),
+    join(await getDatabasesPath(), "jewelDB7.db"),
     version: 1,
     onCreate: (db, version) async {
       await db.execute("""Create table categories(
@@ -45,6 +46,13 @@ Future<void> dbConnection() async {
         password TEXT,
         repeatpassword TEXT
       )""");
+      await db.execute('''
+      create table Cart(
+        cartId INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        imgs TEXT,
+        price INT
+      )''');
     },
   );
 
@@ -58,17 +66,21 @@ Future<void> dbConnection() async {
   //fetch data from categories table
   List getList = await localDB.query('categories');
 
-  //fetch data from WishList table
+  //get data from WishList table
   wishList = await getAllWishes();
   // print(wishList);
 
-  ////fetch data from YourOrder table
+  //get data from YourOrder table
   orderList = await getAllOrders();
   // print(orderList);
 
-  //fetch data from signUp table
+  //get data from signUp table
   signlist = await getSignUpData();
   // print(signlist);
+
+  //get data from cart table
+  cartList=await getAllCarts();
+
 
   List<Map<String, dynamic>> productList = [];
 
@@ -131,7 +143,7 @@ Future<void> deleteWish(WishListModel obj) async {
   wishList = await getAllWishes();
 }
 
-//=========================YourOrder Table
+//=========================YourOrder Table=====================================
 //insert in YourOrder Table
 Future<void> insertYourOrder(YourOrderModel obj) async {
   final localDB = await database;
@@ -157,6 +169,7 @@ Future<List<YourOrderModel>> getAllOrders() async {
 }
 
 //======================signup table================
+//insert data in signup table
 Future<void> insertSignupData(ModelClass obj) async {
   final localDb = await database;
 
@@ -165,6 +178,7 @@ Future<void> insertSignupData(ModelClass obj) async {
   signlist = await getSignUpData();
 }
 
+//fetchData from signup table
 Future<List<ModelClass>> getSignUpData() async {
   final localDb = await database;
 
@@ -180,4 +194,39 @@ Future<List<ModelClass>> getSignUpData() async {
       repeatpassword: signuplist[i]['repeatpassword'],
     );
   });
+}
+
+//===================Cart Table=====================
+//insert data in Cart table
+Future<void> insertCart(AddToCartModel obj) async {
+  final localDB = await database;
+
+  await localDB.insert("Cart", obj.addToCartMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace);
+  cartList=await getAllCarts();
+}
+
+//fetch data from Cart Table
+Future<List<AddToCartModel>> getAllCarts() async {
+  final localDB = await database;
+  List<Map<String,dynamic>> list = await localDB.query("Cart");
+
+  return List.generate(list.length, (idx) {
+    return AddToCartModel(
+        cartId: list[idx]['cartId'],
+        name: list[idx]['name'],
+        imgs: list[idx]['imgs'],
+        price: list[idx]['price']);
+  });
+}
+//delete data from cart
+Future<void> deleteCart(AddToCartModel obj)async{
+  final localDB = await database;
+
+  await localDB.delete(
+    'Cart',
+    where: "cartId=?",
+    whereArgs : [obj.cartId]
+  );
+  cartList=await getAllCarts();
 }
