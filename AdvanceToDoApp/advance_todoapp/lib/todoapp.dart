@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'model_class.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
-// import 'database_connection.dart';
 
 dynamic database;
 
@@ -19,24 +18,17 @@ class ToDoApp extends StatefulWidget {
 }
 
 class _ToDoApp extends State<ToDoApp> {
-  List cardList = [];
-    //TextEditingControllers
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-
-  //Global Key
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     super.initState();
-    databaseConnection();
+    dbConnection();
   }
 
-  void databaseConnection() async {
+  List<ToDoListModel> cardList = [];
+
+  Future<void> dbConnection() async {
     database = openDatabase(
-        path.join(await getDatabasesPath(), "todoappDB7.db"),
+        path.join(await getDatabasesPath(), "todoappDB9.db"),
         version: 1, onCreate: (db, version) async {
       await db.execute('''Create table ToDoTask(
           taskId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,23 +38,30 @@ class _ToDoApp extends State<ToDoApp> {
         )''');
     });
     getData();
-    
   }
 
-// insert task
-
+//insert task
   Future<void> insertTask(ToDoListModel obj) async {
     final localDB = await database;
 
     await localDB.insert('ToDoTask', obj.todoTaskMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+    print("Inserted");
+    getData();
   }
 
-// fetch tasks
-  Future getAllTask() async {
+  Future getData() async {
+    List<ToDoListModel> task = await getAllTask();
+    setState(() {
+      cardList = task;
+    });
+  }
+
+//fetch tasks
+  Future<List<ToDoListModel>> getAllTask() async {
     final localDB = await database;
 
-    List<Map<String,dynamic>> taskList = await localDB.query('ToDoTask');
+    List<Map<String, dynamic>> taskList = await localDB.query('ToDoTask');
 
     return List.generate(taskList.length, (idx) {
       return ToDoListModel(
@@ -73,34 +72,29 @@ class _ToDoApp extends State<ToDoApp> {
     });
   }
 
-// delete
-Future<void> deleteTask(ToDoListModel obj)async{
-  final localDB=await database;
+//delete
+  Future<void> deleteTask(ToDoListModel obj) async {
+    final localDB = await database;
 
-  await localDB.delete(
-    'ToDoTask',
-    where:'taskId=?',
-    whereArgs:[obj.taskId]
-  );
-}
+    await localDB
+        .delete('ToDoTask', where: 'taskId=?', whereArgs: [obj.taskId]);
+  }
+
 //update
-Future updateTask(ToDoListModel obj)async{
-  final localDB=await database;
+  Future<void> updateTask(ToDoListModel obj) async {
+    final localDB = await database;
 
-  await localDB.update(
-    'ToDoTask',
-    obj.todoTaskMap(),
-    where:'taskId=?',
-    whereArgs:[obj.taskId]
-  );
-}
+    await localDB.update('ToDoTask', obj.todoTaskMap(),
+        where: 'taskId=?', whereArgs: [obj.taskId]);
+  }
 
-Future getData()async{
-  List taskList=await getAllTask();
-  setState((){
-    cardList=taskList;
-  });
-}
+  //TextEditingControllers
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+
+  //Global Key
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 // submitTask Function
   void submitTask(bool isEdit, [ToDoListModel? toDoListModelObj]) {
@@ -108,19 +102,16 @@ Future getData()async{
         descriptController.text.trim().isNotEmpty &&
         dateController.text.trim().isNotEmpty) {
       if (!isEdit) {
-        setState(() { 
-          insertTask(ToDoListModel(
-              title: titleController.text,
-              description: descriptController.text,
-              date: dateController.text));
-        });
+        insertTask(ToDoListModel(
+            title: titleController.text,
+            description: descriptController.text,
+            date: dateController.text));
       } else {
         setState(() {
           toDoListModelObj!.title = titleController.text.trim();
           toDoListModelObj.description = descriptController.text.trim();
           toDoListModelObj.date = dateController.text.trim();
           updateTask(toDoListModelObj);
-
         });
       }
     }
@@ -134,7 +125,6 @@ Future getData()async{
     dateController.text = toDoListModelObj.date;
     showBottomSheet(true, toDoListModelObj);
   }
-
 
 //To Clear all TextEditingcontrollers
 
@@ -195,7 +185,8 @@ Future getData()async{
                           controller: titleController,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius:
@@ -221,7 +212,8 @@ Future getData()async{
                           controller: descriptController,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius:
@@ -247,7 +239,8 @@ Future getData()async{
                           decoration: const InputDecoration(
                             suffixIcon: Icon(Icons.date_range_rounded),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius:
@@ -307,11 +300,8 @@ Future getData()async{
         });
   }
 
-  // 
-
   @override
   Widget build(BuildContext context) {
-    getData();
     return Scaffold(
       backgroundColor: const Color.fromRGBO(111, 81, 255, 1),
       body: Column(
@@ -399,7 +389,6 @@ Future getData()async{
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            setState((){});
                                             editTask(cardList[index]);
                                           },
                                           child: Container(
@@ -421,8 +410,9 @@ Future getData()async{
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            setState((){
+                                            setState(() {
                                               deleteTask(cardList[index]);
+                                              cardList.removeAt(index);
                                             });
                                           },
                                           child: Container(

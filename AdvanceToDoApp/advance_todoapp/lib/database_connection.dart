@@ -1,13 +1,13 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as path;
-// import 'todoapp.dart';
+import 'package:path/path.dart';
 import 'model_class.dart';
 
 dynamic database;
+List cardList=[];
 
- Future<void> databaseConnection() async {
+Future<void> dbConnection() async {
     database = openDatabase(
-        path.join(await getDatabasesPath(), "todoappDB7.db"),
+      join(await getDatabasesPath(), "todoappDB9.db"),
         version: 1, onCreate: (db, version) async {
       await db.execute('''Create table ToDoTask(
           taskId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,16 +16,17 @@ dynamic database;
           date DATE
         )''');
     }); 
-    // await ToDoApp.getData();
+    cardList=await getAllTask();
+    print(cardList);
 }
-
 //insert task
-
   Future<void> insertTask(ToDoListModel obj) async {
     final localDB = await database;
 
     await localDB.insert('ToDoTask', obj.todoTaskMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+    print("Inserted");
+    cardList=await getAllTask();
   }
 
 //fetch tasks
