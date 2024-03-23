@@ -7,6 +7,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 
 dynamic database;
+List<ToDoListModel> cardList = [];
 
 class ToDoApp extends StatefulWidget {
   const ToDoApp({super.key});
@@ -24,7 +25,15 @@ class _ToDoApp extends State<ToDoApp> {
     dbConnection();
   }
 
-  List<ToDoListModel> cardList = [];
+  //TextEditingControllers
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+
+  //Global Key
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //for checkbox toggling: task done or not
+  List<bool> isDone = [false];
 
   Future<void> dbConnection() async {
     database = openDatabase(
@@ -46,7 +55,6 @@ class _ToDoApp extends State<ToDoApp> {
 
     await localDB.insert('ToDoTask', obj.todoTaskMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
-    print("Inserted");
     getData();
   }
 
@@ -87,14 +95,6 @@ class _ToDoApp extends State<ToDoApp> {
     await localDB.update('ToDoTask', obj.todoTaskMap(),
         where: 'taskId=?', whereArgs: [obj.taskId]);
   }
-
-  //TextEditingControllers
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-
-  //Global Key
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 // submitTask Function
   void submitTask(bool isEdit, [ToDoListModel? toDoListModelObj]) {
@@ -373,6 +373,7 @@ class _ToDoApp extends State<ToDoApp> {
                       child: ListView.builder(
                           itemCount: cardList.length,
                           itemBuilder: ((context, index) {
+                            isDone.add(false);
                             return Slidable(
                               closeOnScroll: true,
                               endActionPane: ActionPane(
@@ -523,8 +524,12 @@ class _ToDoApp extends State<ToDoApp> {
                                             borderRadius:
                                                 BorderRadius.circular(20)),
                                         activeColor: Colors.green,
-                                        value: true,
-                                        onChanged: (val) {})
+                                        value: isDone[index],
+                                        onChanged: (val) {
+                                          setState(() {
+                                            isDone[index] = !isDone[index];
+                                          });
+                                        })
                                   ],
                                 ),
                               ),
