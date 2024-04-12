@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:expense_manager_app/menu_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _LoginState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _LoginState extends State<HomeScreen> {
-   List colorList = const [
+class _HomeScreenState extends State<HomeScreen> {
+  List colorList = const [
     Color.fromRGBO(0, 174, 91, 0.7),
     Color.fromRGBO(214, 3, 3, 0.7),
     Color.fromRGBO(241, 38, 197, 0.7),
@@ -59,7 +58,13 @@ class _LoginState extends State<HomeScreen> {
                     height: 36,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: "11-06-2022",
+                        hintText: "11-06-2022",
+                         hintStyle: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        color: Color.fromRGBO(0, 0, 0, 0.8),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                      ),),
                         border: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Color.fromRGBO(191, 189, 189, 1)),
@@ -88,7 +93,13 @@ class _LoginState extends State<HomeScreen> {
                     height: 36,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: "900",
+                        hintText: "900",
+                         hintStyle: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        color: Color.fromRGBO(0, 0, 0, 0.8),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                      ),),
                         border: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Color.fromRGBO(191, 189, 189, 1)),
@@ -117,7 +128,13 @@ class _LoginState extends State<HomeScreen> {
                     height: 36,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: "Shopping",
+                        hintText: "Shopping",
+                         hintStyle: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        color: Color.fromRGBO(0, 0, 0, 0.8),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                      ),),
                         border: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Color.fromRGBO(191, 189, 189, 1)),
@@ -146,7 +163,13 @@ class _LoginState extends State<HomeScreen> {
                     height: 36,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText:"Lorem Ipsum is simply dummy text of the",
+                        hintText: "Lorem Ipsum is simply dummy text of the",
+                         hintStyle: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        color: Color.fromRGBO(0, 0, 0, 0.8),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                      ),),
                         border: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: Color.fromRGBO(191, 189, 189, 1)),
@@ -155,7 +178,6 @@ class _LoginState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                 
                   Center(
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 30),
@@ -171,8 +193,7 @@ class _LoginState extends State<HomeScreen> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const HomeScreen()));
+                        Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(
                             fixedSize: const Size(123, 40),
@@ -204,14 +225,6 @@ class _LoginState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.menu,
-            size: 24,
-            color: Color.fromRGBO(33, 33, 33, 1),
-          ),
-        ),
         title: Text(
           "June 2022",
           style: GoogleFonts.poppins(
@@ -232,6 +245,7 @@ class _LoginState extends State<HomeScreen> {
               ))
         ],
       ),
+      drawer: const MyMenuDrawer(),
       body: ListView.builder(
           itemCount: 5,
           itemBuilder: ((context, index) {
@@ -255,7 +269,7 @@ class _LoginState extends State<HomeScreen> {
                         width: 43,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          color: colorList[index%colorList.length],
+                          color: colorList[index % colorList.length],
                         ),
                       ),
                       const SizedBox(
