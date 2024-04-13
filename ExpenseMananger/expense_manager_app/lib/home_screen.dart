@@ -262,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         height: 43,
@@ -306,13 +306,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
+                      GestureDetector(
+                          onTap: () {},
+                          child: const Icon(
                             Icons.remove_circle,
                             size: 18,
                             color: Color.fromRGBO(246, 113, 49, 1),
                           )),
+                      const SizedBox(width: 5,),
                       Text(
                         "500",
                         style: GoogleFonts.poppins(

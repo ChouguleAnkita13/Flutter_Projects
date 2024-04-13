@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:expense_manager_app/login_screen.dart';
 
 class SplashScreen extends StatelessWidget{
@@ -10,9 +10,11 @@ class SplashScreen extends StatelessWidget{
       body: SizedBox(
         width: double.infinity,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 300,),
+
             GestureDetector(
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const Login()));
@@ -29,14 +31,14 @@ class SplashScreen extends StatelessWidget{
               ),
             ),
             // const SizedBox(height: 300,),
-            // Spacer(),
-            // Container(
-            //   margin: const EdgeInsets.only(bottom: 50),
-            //   height:24,
-            //   child: Text("Expense Manager",style: GoogleFonts.poppins(textStyle:const TextStyle(
-            //     fontSize: 16,fontWeight: FontWeight.w600,
-            //   ),)),
-            // )
+            const Spacer(),
+            Container(
+              margin: const EdgeInsets.only(bottom: 50),
+              height:24,
+              child: Text("Expense Manager",style: GoogleFonts.poppins(textStyle:const TextStyle(
+                fontSize: 16,fontWeight: FontWeight.w600,
+              ),)),
+            )
           ],
         ),
       ),
