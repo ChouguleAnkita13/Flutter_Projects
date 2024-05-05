@@ -37,184 +37,190 @@ class _HomeScreenState extends State<HomeScreen> {
                 //To avoid the keyboard overlap the screen
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Form(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Date",
-                    style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: Color.fromRGBO(33, 33, 33, 1),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  SizedBox(
-                    height: 36,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "11-06-2022",
-                         hintStyle: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 0.8),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromRGBO(191, 189, 189, 1)),
-                          borderRadius: BorderRadius.circular(5),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Date",
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: Color.fromRGBO(33, 33, 33, 1),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Text(
-                    "Amount",
-                    style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: Color.fromRGBO(33, 33, 33, 1),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    const SizedBox(
+                      height: 6,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  SizedBox(
-                    height: 36,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "900",
-                         hintStyle: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 0.8),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromRGBO(191, 189, 189, 1)),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Text(
-                    "Category",
-                    style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: Color.fromRGBO(33, 33, 33, 1),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  SizedBox(
-                    height: 36,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Shopping",
-                         hintStyle: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 0.8),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromRGBO(191, 189, 189, 1)),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Text(
-                    "Description",
-                    style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: Color.fromRGBO(33, 33, 33, 1),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  SizedBox(
-                    height: 36,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Lorem Ipsum is simply dummy text of the",
-                         hintStyle: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 0.8),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromRGBO(191, 189, 189, 1)),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 30),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(67),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.2),
-                            offset: Offset(1, 2),
-                            blurRadius: 4,
-                          )
-                        ],
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                        Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            fixedSize: const Size(123, 40),
-                            backgroundColor:
-                                const Color.fromRGBO(14, 161, 125, 1),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(67))),
-                        child: Text(
-                          "Add",
-                          style: GoogleFonts.poppins(
+                    SizedBox(
+                      height: 36,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "11-06-2022",
+                          hintStyle: GoogleFonts.poppins(
                             textStyle: const TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                              color: Color.fromRGBO(0, 0, 0, 0.8),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color.fromRGBO(191, 189, 189, 1)),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    Text(
+                      "Amount",
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: Color.fromRGBO(33, 33, 33, 1),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    SizedBox(
+                      height: 36,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "900",
+                          hintStyle: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: Color.fromRGBO(0, 0, 0, 0.8),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color.fromRGBO(191, 189, 189, 1)),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    Text(
+                      "Category",
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: Color.fromRGBO(33, 33, 33, 1),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    SizedBox(
+                      height: 36,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Shopping",
+                          hintStyle: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: Color.fromRGBO(0, 0, 0, 0.8),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color.fromRGBO(191, 189, 189, 1)),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    Text(
+                      "Description",
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: Color.fromRGBO(33, 33, 33, 1),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    SizedBox(
+                      height: 36,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Lorem Ipsum is simply dummy text of the",
+                          hintStyle: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: Color.fromRGBO(0, 0, 0, 0.8),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color.fromRGBO(191, 189, 189, 1)),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 30),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(67),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color.fromRGBO(0, 0, 0, 0.2),
+                              offset: Offset(1, 2),
+                              blurRadius: 4,
+                            )
+                          ],
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(123, 40),
+                              backgroundColor:
+                                  const Color.fromRGBO(14, 161, 125, 1),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(67))),
+                          child: Text(
+                            "Add",
+                            style: GoogleFonts.poppins(
+                              textStyle: const TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 1),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
@@ -313,7 +319,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             size: 18,
                             color: Color.fromRGBO(246, 113, 49, 1),
                           )),
-                      const SizedBox(width: 5,),
+                      const SizedBox(
+                        width: 5,
+                      ),
                       Text(
                         "500",
                         style: GoogleFonts.poppins(

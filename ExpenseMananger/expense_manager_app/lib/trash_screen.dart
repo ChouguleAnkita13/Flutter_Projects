@@ -33,7 +33,7 @@ class _TrashScreenState extends State<TrashScreen> {
               padding: const EdgeInsets.only(
                   left: 12, right: 15, top: 10, bottom: 5),
               width: 361,
-              height: 80,
+              height: 82,
               decoration: const BoxDecoration(
                 border: Border(
                     bottom: BorderSide(

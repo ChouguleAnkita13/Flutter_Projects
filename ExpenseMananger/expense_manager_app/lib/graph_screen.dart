@@ -43,7 +43,7 @@ class _GraphScreenState extends State<GraphScreen> {
       ),
       drawer: const MyMenuDrawer(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+        padding: const EdgeInsets.only(left: 20,right: 20, top: 40,bottom: 10),
         child: Column(
           children: [
             PieChart(
@@ -128,12 +128,13 @@ class _GraphScreenState extends State<GraphScreen> {
                 )),
                 child: SizedBox(
                   width: 284,
-                  height: 320,
+                  height: 280,
                   child: ListView.separated(
+                    shrinkWrap: true,
                     itemCount: 5,
                     separatorBuilder: (context, index) {
                       return const SizedBox(
-                        height: 23,
+                        height: 20,
                       );
                     },
                     itemBuilder: (context, index) {
