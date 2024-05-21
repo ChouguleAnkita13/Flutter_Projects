@@ -1,7 +1,3 @@
-import 'package:expense_manager_app/category_screen.dart';
-import 'package:expense_manager_app/graph_screen.dart';
-import 'package:expense_manager_app/home_screen.dart';
-import 'package:expense_manager_app/trash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -80,8 +76,7 @@ class _MyMenuDrawerState extends State<MyMenuDrawer> {
                 setState(() {
                   selectedMenu = 1;
                 });
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const HomeScreen()));
+                Navigator.of(context).pushNamed("/homeScreen");
               },
               child: Row(
                 children: [
@@ -122,8 +117,7 @@ class _MyMenuDrawerState extends State<MyMenuDrawer> {
                 setState(() {
                   selectedMenu = 2;
                 });
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const GraphScreen()));
+                Navigator.of(context).pushNamed("/graphScreen");
               },
               child: Row(
                 children: [
@@ -162,8 +156,7 @@ class _MyMenuDrawerState extends State<MyMenuDrawer> {
                 setState(() {
                   selectedMenu = 3;
                 });
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const CategoryScreen()));
+                Navigator.of(context).pushNamed("/categoryScreen");
               },
               child: Row(
                 children: [
@@ -202,8 +195,7 @@ class _MyMenuDrawerState extends State<MyMenuDrawer> {
                 setState(() {
                   selectedMenu = 4;
                 });
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const TrashScreen()));
+                Navigator.of(context).pushNamed("/trashScreen");
               },
               child: Row(
                 children: [
