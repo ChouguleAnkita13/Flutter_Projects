@@ -86,6 +86,11 @@ class _VerificationState extends State<Verification> {
                           ],
                           color: Colors.white,
                         ),
+                        child: const TextField(
+                          decoration: InputDecoration(border: InputBorder.none),
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                        ),
                       );
                     },
                   ),
