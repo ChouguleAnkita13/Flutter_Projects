@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jewellery_app/screens/profilepage.dart';
-import 'package:jewellery_app/screens/loginpage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/database/database_connection.dart';
 import 'package:jewellery_app/model/model.dart';
@@ -31,11 +29,7 @@ class _SignUpState extends State<SignUp> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const ProfilePage(),
-              ),
-            );
+            Navigator.of(context).pushNamed("/profile");
           },
         ),
       ),
@@ -184,11 +178,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                           );
                         });
-                         Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const LoginPage(),
-                                ),
-                              );
+                        Navigator.of(context).pushNamed("/login");
+
                         nameController.clear();
                         surnameController.clear();
                         contactNoController.clear();

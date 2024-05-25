@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/screens/products.dart';
 import 'package:jewellery_app/screens/homepage.dart';
-import 'package:jewellery_app/screens/wishlist.dart';
 import 'package:jewellery_app/widgets/my_bottomnavigationbar.dart';
 
 class Categories extends StatefulWidget {
@@ -42,8 +41,8 @@ class _CategoriesState extends State<Categories> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const WishList()));
+                              Navigator.of(context).pushNamed("/wishList");
+
             },
             icon: const Icon(Icons.favorite_border,
                 color: Color.fromRGBO(51, 51, 51, 1), size: 24),

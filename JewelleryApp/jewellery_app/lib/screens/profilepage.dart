@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jewellery_app/screens/homepage.dart';
-import 'package:jewellery_app/screens/loginpage.dart';
-import 'package:jewellery_app/screens/signup_page.dart';
 import 'package:jewellery_app/widgets/my_bottomnavigationbar.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -23,11 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const HomePage(),
-              ),
-            );
+            Navigator.of(context).pushNamed("/home");
           },
         ),
         shadowColor: const Color.fromRGBO(0, 0, 0, 0.15),
@@ -84,11 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const LoginPage(),
-                            ),
-                          );
+                          Navigator.of(context).pushNamed("/login");
                         },
                         child: const Text(
                           "SIGN IN",
@@ -120,11 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const SignUp(),
-                            ),
-                          );
+                          Navigator.of(context).pushNamed("/signUp");
                         },
                         child: const Text(
                           "CREATE ACCOUNT",

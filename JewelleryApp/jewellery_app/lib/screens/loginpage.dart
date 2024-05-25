@@ -12,7 +12,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
- 
   bool _passwordVisible = true;
   List accountDetailsList = [];
 
@@ -29,11 +28,7 @@ class _LoginPageState extends State<LoginPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const ProfilePage(),
-              ),
-            );
+            Navigator.of(context).pushNamed("/profile");
           },
         ),
       ),
@@ -54,8 +49,6 @@ class _LoginPageState extends State<LoginPage> {
                     controller: emailController,
                     decoration: const InputDecoration(
                       hintText: "EMAIL",
-
-                    
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -74,7 +67,6 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: _passwordVisible,
                     decoration: InputDecoration(
                       hintText: " PASSWORD",
-                     
                       suffixIcon: IconButton(
                         icon: Icon(_passwordVisible
                             ? Icons.visibility
@@ -110,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     onPressed: () {
                       bool loginValidated = _formKey.currentState!.validate();
-                      int flag=0;
+                      int flag = 0;
                       if (loginValidated) {
                         for (int i = 0; i < signlist.length; i++) {
                           print("For");
@@ -132,24 +124,19 @@ class _LoginPageState extends State<LoginPage> {
                               builder: (context) => ProfilePage(
                                   accountDetailsList: accountDetailsList),
                             ));
-                            flag=1;
+                            flag = 1;
                             break;
-                          } 
+                          }
                         }
-                        if(flag==0){                        
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                    "Login Failed , Invalid Credentials.."),
-                              ),
-                            );
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const ProfilePage(),
-                              ),
-                            );
-                          
+                        if (flag == 0) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content:
+                                  Text("Login Failed , Invalid Credentials.."),
+                            ),
+                          );
+                          Navigator.of(context).pushNamed("/profile");
                         }
 
                         emailController.clear();

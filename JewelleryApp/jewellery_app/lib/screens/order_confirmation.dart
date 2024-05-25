@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/database/database_connection.dart';
 import 'package:jewellery_app/model/model.dart';
-import 'package:jewellery_app/screens/wishlist.dart';
-
 import 'package:jewellery_app/widgets/my_bottomnavigationbar.dart';
 
 class OrderConfirm extends StatefulWidget {
@@ -237,8 +235,7 @@ class _OrderConfirmState extends State<OrderConfirm> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const WishList()));
+              Navigator.of(context).pushNamed("/wishList");
             },
             icon: const Icon(Icons.favorite_border,
                 color: Color.fromRGBO(51, 51, 51, 1), size: 24),
