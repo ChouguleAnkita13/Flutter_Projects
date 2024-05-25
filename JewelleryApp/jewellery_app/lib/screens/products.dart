@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/model/model.dart';
-import 'package:jewellery_app/screens/addtocart.dart';
-import 'package:jewellery_app/screens/categories.dart';
-import 'package:jewellery_app/screens/homepage.dart';
 import 'package:jewellery_app/screens/order_confirmation.dart';
 import 'package:jewellery_app/database/database_connection.dart';
-import 'package:jewellery_app/screens/profilepage.dart';
 import 'package:jewellery_app/screens/wishlist.dart';
-import 'package:jewellery_app/screens/your_order.dart';
+import 'package:jewellery_app/widgets/my_bottomnavigationbar.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList(
@@ -203,53 +199,7 @@ class _ProductListState extends State<ProductList> {
               })),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.black,
-          items: [
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HomePage()));
-                    },
-                    icon: const Icon(Icons.home_outlined)),
-                label: 'Home'),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const Categories()));
-                    },
-                    icon: const Icon(Icons.category_outlined)),
-                label: 'Category'),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const YourOrder()));
-                    },
-                    icon: const Icon(Icons.shopping_bag_outlined)),
-                label: 'Your order'),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const AddToCart()));
-                    },
-                    icon: const Icon(Icons.shopping_cart_outlined)),
-                label: 'Cart'),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ProfilePage()));
-                    },
-                    icon: const Icon(Icons.person_3_outlined)),
-                label: 'Profile'),
-          ]),
+      bottomNavigationBar: const MyBottomNavigationBar(),
     );
   }
 }

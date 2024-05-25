@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/database/database_connection.dart';
 import 'package:jewellery_app/model/model.dart';
-import 'package:jewellery_app/screens/addtocart.dart';
 import 'package:jewellery_app/screens/wishlist.dart';
 
-import 'package:jewellery_app/screens/your_order.dart';
-import 'package:jewellery_app/screens/homepage.dart';
-import 'package:jewellery_app/screens/categories.dart';
-import 'package:jewellery_app/screens/profilepage.dart';
+import 'package:jewellery_app/widgets/my_bottomnavigationbar.dart';
 
 class OrderConfirm extends StatefulWidget {
   const OrderConfirm({super.key, required this.selectedOrder});
@@ -20,7 +16,6 @@ class OrderConfirm extends StatefulWidget {
 }
 
 class _OrderConfirmState extends State<OrderConfirm> {
-
   TextEditingController addressController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -180,13 +175,14 @@ class _OrderConfirmState extends State<OrderConfirm> {
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-//inserted order in database table                    
-                      insertYourOrder(YourOrderModel(name: widget.selectedOrder["name"],
-                       imgs:  widget.selectedOrder["imgs"],
-                       qty: int.tryParse(quantityController.text)!,
-                       amount: widget.selectedOrder["price"] * (int.tryParse(quantityController.text))
-                       ));
-                     
+//inserted order in database table
+                      insertYourOrder(YourOrderModel(
+                          name: widget.selectedOrder["name"],
+                          imgs: widget.selectedOrder["imgs"],
+                          qty: int.tryParse(quantityController.text)!,
+                          amount: widget.selectedOrder["price"] *
+                              (int.tryParse(quantityController.text))));
+
                       Navigator.of(context).pop();
                     });
                   },
@@ -240,9 +236,11 @@ class _OrderConfirmState extends State<OrderConfirm> {
             size: 24,
           ),
           IconButton(
-            onPressed: (){    Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context)=>const WishList()));},
-        icon: const Icon(Icons.favorite_border,
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const WishList()));
+            },
+            icon: const Icon(Icons.favorite_border,
                 color: Color.fromRGBO(51, 51, 51, 1), size: 24),
           ),
           const SizedBox(
@@ -347,56 +345,7 @@ class _OrderConfirmState extends State<OrderConfirm> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.black,
-          // unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
-          // selectedLabelStyle:const TextStyle(decoration: TextDecoration.underline,fontWeight: FontWeight.w700) ,
-          items: [
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HomePage()));
-                    },
-                    icon: const Icon(Icons.home_outlined)),
-                label: 'Home'),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const Categories()));
-                    },
-                    icon: const Icon(Icons.category_outlined)),
-                label: 'Category'),
-             BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const YourOrder()));
-                    },
-                    icon: const Icon(Icons.shopping_bag_outlined)),
-                label: 'Your order'),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const AddToCart()));
-                    },
-                    icon: const Icon(Icons.shopping_cart_outlined)),
-                label: 'Cart'),
-            BottomNavigationBarItem(
-                icon: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ProfilePage()));
-                    },
-                    icon: const Icon(Icons.person_3_outlined)),
-                label: 'Profile'),
-          ]),
-    
+      bottomNavigationBar: const MyBottomNavigationBar(),
     );
   }
 }

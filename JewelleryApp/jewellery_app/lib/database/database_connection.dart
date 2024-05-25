@@ -56,7 +56,7 @@ Future<void> dbConnection() async {
     },
   );
 
-  // insert  listOfCatergoies into table
+  // // insert  listOfCatergoies into table
   // for(int i=0;i<listofCategories.length;i++){
   //   insertCategories(listofCategories[i]);
   // }
