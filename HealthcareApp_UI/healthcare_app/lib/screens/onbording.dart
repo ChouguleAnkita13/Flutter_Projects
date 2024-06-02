@@ -199,7 +199,9 @@ class _OnboardScreenState extends State<OnboardScreen> {
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                            Navigator.of(context).pushNamed("/signup");
+                      },
                       style: ElevatedButton.styleFrom(
                         fixedSize: const Size(250, 56),
                         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
