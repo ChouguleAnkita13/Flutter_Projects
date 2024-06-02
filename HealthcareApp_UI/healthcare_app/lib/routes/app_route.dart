@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare_app/screens/home.dart';
 import 'package:healthcare_app/screens/login.dart';
 import 'package:healthcare_app/screens/onbording.dart';
 import 'package:healthcare_app/screens/signup.dart';
@@ -10,4 +11,6 @@ Map<String,Widget Function(BuildContext)> appRoutes={
   "/onboard":(context)=>const OnboardScreen(),
   "/signup":(context)=>const SignUp(),
   "/login":(context)=> const Login(),
+  "/home":(context)=> const HomeScreen(),
+
 };
