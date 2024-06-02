@@ -24,15 +24,15 @@ class Login extends StatelessWidget {
                     color: const Color.fromRGBO(34, 31, 31, 1),
                     fontSize: 18),
               ),
-              const SizedBox(
-                height: 40,
-              ),
+             
               Form(
                   key: _formKey,
                   child: Column(
                     children: [
                       Container(
                         color: const Color.fromRGBO(249, 250, 251, 1),
+                        margin: const EdgeInsets.only(top: 40),
+
                         height: 56,
                         child: TextFormField(
                           controller: _emailController,
@@ -59,11 +59,11 @@ class Login extends StatelessWidget {
                               ))),
                         ),
                       ),
-                      const SizedBox(
-                        height: 25,
-                      ),
+                      
                       Container(
                         color: const Color.fromRGBO(249, 250, 251, 1),
+                        margin: const EdgeInsets.only(top: 25,bottom: 15),
+
                         height: 56,
                         child: TextFormField(
                           controller: _passwordController,
@@ -94,9 +94,7 @@ class Login extends StatelessWidget {
                               ))),
                         ),
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
+                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
