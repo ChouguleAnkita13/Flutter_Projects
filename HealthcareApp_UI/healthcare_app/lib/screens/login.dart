@@ -15,7 +15,7 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  bool _isPasswordVisiable=true;
+  bool _isPasswordVisiable = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +24,31 @@ class _LoginState extends State<Login> {
         child: Padding(
           padding: const EdgeInsets.only(top: 65, left: 30, right: 30),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Sign In",
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w700,
-                    color: const Color.fromRGBO(34, 31, 31, 1),
-                    fontSize: 18),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width / 2,
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed("/");
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          size: 24,
+                          color: Color.fromRGBO(34, 31, 31, 0.8),
+                        )),
+                    const Spacer(),
+                    Text(
+                      "Sign In",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w700,
+                          color: const Color.fromRGBO(34, 31, 31, 1),
+                          fontSize: 18),
+                    ),
+                  ],
+                ),
               ),
               Form(
                   key: _formKey,
@@ -80,7 +98,7 @@ class _LoginState extends State<Login> {
                                 size: 24,
                                 color: Color.fromRGBO(34, 31, 31, 0.4),
                               ),
-                               suffixIcon: GestureDetector(
+                              suffixIcon: GestureDetector(
                                 onTap: () {
                                   setState(() {
                                     _isPasswordVisiable = !_isPasswordVisiable;
@@ -94,7 +112,6 @@ class _LoginState extends State<Login> {
                                   color: const Color.fromRGBO(34, 31, 31, 0.4),
                                 ),
                               ),
-                              
                               hintText: "  Enter your password",
                               hintStyle: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w400,
@@ -174,12 +191,14 @@ class _LoginState extends State<Login> {
                     ],
                   )),
               const SizedBox(height: 60),
-              Text(
-                "OR",
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w400,
-                    color: const Color.fromRGBO(161, 168, 176, 1),
-                    fontSize: 16),
+              Center(
+                child: Text(
+                  "OR",
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w400,
+                      color: const Color.fromRGBO(161, 168, 176, 1),
+                      fontSize: 16),
+                ),
               ),
               GestureDetector(
                 onTap: () {},

@@ -27,13 +27,32 @@ class _SignUpState extends State<SignUp> {
         child: Padding(
           padding: const EdgeInsets.only(top: 65, left: 30, right: 30),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Sign Up",
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w700,
-                    color: const Color.fromRGBO(34, 31, 31, 1),
-                    fontSize: 18),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width/2,
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                            Navigator.of(context).pushNamed("/");
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          size: 24,
+                          color:  Color.fromRGBO(34, 31, 31, 0.8),
+                        )),
+                       const Spacer(),
+                    Text(
+                      "Sign Up",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w700,
+                          color: const Color.fromRGBO(34, 31, 31, 1),
+                          fontSize: 18),
+                    ),
+                  ],
+                ),
               ),
               Form(
                   key: _formKey,
