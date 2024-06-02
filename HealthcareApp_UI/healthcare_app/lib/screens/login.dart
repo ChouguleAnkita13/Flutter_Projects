@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Login extends StatelessWidget {
-  Login({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey();
+
+  bool _isPasswordVisiable=true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +32,6 @@ class Login extends StatelessWidget {
                     color: const Color.fromRGBO(34, 31, 31, 1),
                     fontSize: 18),
               ),
-             
               Form(
                   key: _formKey,
                   child: Column(
@@ -32,7 +39,6 @@ class Login extends StatelessWidget {
                       Container(
                         color: const Color.fromRGBO(249, 250, 251, 1),
                         margin: const EdgeInsets.only(top: 40),
-
                         height: 56,
                         child: TextFormField(
                           controller: _emailController,
@@ -59,26 +65,36 @@ class Login extends StatelessWidget {
                               ))),
                         ),
                       ),
-                      
                       Container(
                         color: const Color.fromRGBO(249, 250, 251, 1),
-                        margin: const EdgeInsets.only(top: 25,bottom: 15),
-
+                        margin: const EdgeInsets.only(top: 25, bottom: 15),
                         height: 56,
                         child: TextFormField(
                           controller: _passwordController,
                           cursorColor: const Color.fromRGBO(34, 31, 31, 0.4),
+                          obscureText: _isPasswordVisiable,
+                          obscuringCharacter: "*",
                           decoration: InputDecoration(
                               prefixIcon: const Icon(
                                 Icons.lock_outline_rounded,
                                 size: 24,
                                 color: Color.fromRGBO(34, 31, 31, 0.4),
                               ),
-                              suffixIcon: const Icon(
-                                Icons.visibility_off_outlined,
-                                size: 24,
-                                color: Color.fromRGBO(34, 31, 31, 0.4),
+                               suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _isPasswordVisiable = !_isPasswordVisiable;
+                                  });
+                                },
+                                child: Icon(
+                                  _isPasswordVisiable
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                  size: 24,
+                                  color: const Color.fromRGBO(34, 31, 31, 0.4),
+                                ),
                               ),
+                              
                               hintText: "  Enter your password",
                               hintStyle: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w400,
@@ -94,7 +110,6 @@ class Login extends StatelessWidget {
                               ))),
                         ),
                       ),
-                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
