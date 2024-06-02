@@ -9,5 +9,5 @@ Map<String,Widget Function(BuildContext)> appRoutes={
   // "/home":(context)=>Home(),
   "/onboard":(context)=>const OnboardScreen(),
   "/signup":(context)=>const SignUp(),
-  "/login":(context)=> Login(),
+  "/login":(context)=> const Login(),
 };
