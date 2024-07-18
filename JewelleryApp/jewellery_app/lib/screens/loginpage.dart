@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/screens/profilepage.dart';
 import 'package:jewellery_app/model/model.dart';
+import 'dart:developer';
 
 List<ModelClass> signlist = [];
 
@@ -25,12 +26,6 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pushNamed("/profile");
-          },
-        ),
       ),
       body: ListView(
         children: [
@@ -105,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                       int flag = 0;
                       if (loginValidated) {
                         for (int i = 0; i < signlist.length; i++) {
-                          print("For");
+                          log("For");
                           if (emailController.text == signlist[i].email &&
                               passwordController.text == signlist[i].password) {
                             accountDetailsList.add({

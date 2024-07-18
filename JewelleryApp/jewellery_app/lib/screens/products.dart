@@ -1,9 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/model/model.dart';
 import 'package:jewellery_app/screens/order_confirmation.dart';
 import 'package:jewellery_app/database/database_connection.dart';
-import 'package:jewellery_app/widgets/my_bottomnavigationbar.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList(
@@ -139,9 +140,9 @@ class _ProductListState extends State<ProductList> {
                                           imgs: widget.prodList[idx]['imgs'],
                                           price: widget.prodList[idx]
                                               ['price']));
-                                      print("added");
+                                      log("added");
                                     } else {
-                                      print("removed");
+                                      log("removed");
                                       setState(() {
                                         // deleteWish(widget.prodList[idx]);
                                       });
@@ -198,7 +199,6 @@ class _ProductListState extends State<ProductList> {
               })),
         ),
       ),
-      bottomNavigationBar: const MyBottomNavigationBar(),
     );
   }
 }

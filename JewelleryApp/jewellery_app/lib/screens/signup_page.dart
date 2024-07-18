@@ -26,12 +26,6 @@ class _SignUpState extends State<SignUp> {
       backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pushNamed("/profile");
-          },
-        ),
       ),
       body: ListView(
         children: [

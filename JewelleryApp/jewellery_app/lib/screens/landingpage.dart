@@ -25,7 +25,7 @@ class _LandingPageState extends State<LandingPage> {
             "assets/images/layer.png",
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed("/home"),
+            onTap: () => Navigator.of(context).pushNamed("/homescreen"),
             child: Image.asset(
               "assets/images/logo.png",
             ),

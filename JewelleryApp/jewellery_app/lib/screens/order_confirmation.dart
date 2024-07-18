@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/database/database_connection.dart';
 import 'package:jewellery_app/model/model.dart';
-import 'package:jewellery_app/widgets/my_bottomnavigationbar.dart';
 
 class OrderConfirm extends StatefulWidget {
   const OrderConfirm({super.key, required this.selectedOrder});
@@ -342,7 +341,6 @@ class _OrderConfirmState extends State<OrderConfirm> {
           ),
         ),
       ),
-      bottomNavigationBar: const MyBottomNavigationBar(),
     );
   }
 }
