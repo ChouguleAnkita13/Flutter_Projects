@@ -49,8 +49,7 @@ class _ProductListState extends State<ProductList> {
           ),
           IconButton(
             onPressed: () {
-                               Navigator.of(context).pushNamed("/wishList");
-
+              Navigator.of(context).pushNamed("/wishList");
             },
             icon: const Icon(Icons.favorite_border,
                 color: Color.fromRGBO(51, 51, 51, 1), size: 24),
@@ -79,22 +78,65 @@ class _ProductListState extends State<ProductList> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedOrder = widget.prodList[idx];
-                          });
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  OrderConfirm(selectedOrder: selectedOrder)));
-                        },
-                        child: SizedBox(
-                          child: Image.asset(
-                            widget.prodList[idx]["imgs"],
-                            fit: BoxFit.cover,
-                            height: 200,
+                      Stack(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedOrder = widget.prodList[idx];
+                              });
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => OrderConfirm(
+                                      selectedOrder: selectedOrder)));
+                            },
+                            child: Image.asset(
+                              widget.prodList[idx]["imgs"],
+                              fit: BoxFit.cover,
+                              height: 200,
+                              width: 170,
+                            ),
                           ),
-                        ),
+                          Positioned(
+                            top: 5,
+                            left: 130,
+                            child: Container(
+                              height: 30, width: 30,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: const Color.fromRGBO(254, 254, 254, 0.7),
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isSelectedWishList[idx] =
+                                        !isSelectedWishList[idx];
+                                  });
+                                  if (isSelectedWishList[idx]) {
+                                    //inserted wish in database table
+                                    insertWish(WishListModel(
+                                        name: widget.prodList[idx]['name'],
+                                        imgs: widget.prodList[idx]['imgs'],
+                                        price: widget.prodList[idx]['price']));
+                                    log("added");
+                                  } else {
+                                    log("removed");
+                                    setState(() {
+                                      // deleteWish(widget.prodList[idx]);
+                                    });
+                                  }
+                                },
+                                child: isSelectedWishList[idx]
+                                    ? const Icon(
+                                        Icons.favorite,
+                                        color: Colors.red,
+                                        size: 20,
+                                      )
+                                    : const Icon(
+                                        Icons.favorite_border_outlined),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                       Container(
                         padding:
@@ -111,6 +153,7 @@ class _ProductListState extends State<ProductList> {
                                     color: Color.fromRGBO(0, 0, 0, 1)),
                               ),
                             ),
+                            const SizedBox(height: 10),
                             Row(
                               children: [
                                 const Icon(
@@ -126,43 +169,17 @@ class _ProductListState extends State<ProductList> {
                                         color: Color.fromRGBO(0, 0, 0, 1)),
                                   ),
                                 ),
-                                const Spacer(),
-                                IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      isSelectedWishList[idx] =
-                                          !isSelectedWishList[idx];
-                                    });
-                                    if (isSelectedWishList[idx]) {
-//inserted wish in database table
-                                      insertWish(WishListModel(
-                                          name: widget.prodList[idx]['name'],
-                                          imgs: widget.prodList[idx]['imgs'],
-                                          price: widget.prodList[idx]
-                                              ['price']));
-                                      log("added");
-                                    } else {
-                                      log("removed");
-                                      setState(() {
-                                        // deleteWish(widget.prodList[idx]);
-                                      });
-                                    }
-                                  },
-                                  icon: isSelectedWishList[idx]
-                                      ? const Icon(Icons.favorite,
-                                          color: Colors.red)
-                                      : const Icon(
-                                          Icons.favorite_border_outlined),
-                                ),
                               ],
                             ),
                           ],
                         ),
                       ),
+                      // Spacer(),
                       Expanded(
                         child: Container(
+                          height: 40,
                           margin: const EdgeInsets.only(
-                              left: 5, bottom: 5, right: 5),
+                              left: 5, bottom: 10, right: 5),
                           child: TextButton(
                               onPressed: () {
                                 setState(() {
