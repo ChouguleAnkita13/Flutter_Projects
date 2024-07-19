@@ -17,6 +17,10 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
+     Future.delayed(const Duration(seconds: 2), () {
+      // Navigate to the home screen
+      Navigator.of(context).pushReplacementNamed("/homescreen");
+    });
     return Scaffold(
       backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
       body: Column(
@@ -24,11 +28,8 @@ class _LandingPageState extends State<LandingPage> {
           Image.asset(
             "assets/images/layer.png",
           ),
-          GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed("/homescreen"),
-            child: Image.asset(
-              "assets/images/logo.png",
-            ),
+          Image.asset(
+            "assets/images/logo.png",
           ),
           Expanded(
             child: Image.asset(
