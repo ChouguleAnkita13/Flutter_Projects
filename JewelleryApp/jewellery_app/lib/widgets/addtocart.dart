@@ -74,12 +74,41 @@ class _AddToCartState extends State<AddToCart> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            child: Image.asset(
-                              cartList[idx].imgs,
-                              fit: BoxFit.cover,
-                              height: 200,
-                            ),
+                          Stack(
+                            children: [
+                              Image.asset(
+                                cartList[idx].imgs,
+                                fit: BoxFit.cover,
+                                height: 200,
+                                width: 170,
+                              ),
+                              Positioned(
+                                top: 5,
+                                left: 130,
+                                child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: const Color.fromRGBO(
+                                        254, 254, 254, 0.7),
+                                  ),
+                                  child: GestureDetector(
+                                    //delete cart in database table
+                                    onTap: () {
+                                      setState(() {
+                                        deleteCart(cartList[idx]);
+                                        cartList.removeAt(idx);
+                                      });
+                                    },
+                                    child: const Icon(
+                                      Icons.cancel_outlined,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                           Container(
                             padding: const EdgeInsets.only(
@@ -96,6 +125,7 @@ class _AddToCartState extends State<AddToCart> {
                                         color: Color.fromRGBO(0, 0, 0, 1)),
                                   ),
                                 ),
+                                const SizedBox(height: 10),
                                 Row(
                                   children: [
                                     const Icon(
@@ -111,17 +141,6 @@ class _AddToCartState extends State<AddToCart> {
                                           color: Color.fromRGBO(0, 0, 0, 1),
                                         ),
                                       ),
-                                    ),
-                                    const Spacer(),
-                                    IconButton(
-//delete cart in database table
-                                      onPressed: () {
-                                        setState(() {
-                                          deleteCart(cartList[idx]);
-                                          cartList.removeAt(idx);
-                                        });
-                                      },
-                                      icon: const Icon(Icons.cancel),
                                     ),
                                   ],
                                 ),
