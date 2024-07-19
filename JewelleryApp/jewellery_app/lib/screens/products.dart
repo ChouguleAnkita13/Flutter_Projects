@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/model/model.dart';
 import 'package:jewellery_app/screens/order_confirmation.dart';
-import 'package:jewellery_app/database/database_connection.dart';
+import 'package:jewellery_app/controller/database_connection.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList(

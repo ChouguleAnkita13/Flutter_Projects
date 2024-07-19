@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jewellery_app/screens/products.dart';
-import 'package:jewellery_app/screens/homepage.dart';
+import 'package:jewellery_app/widgets/homepage.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key});

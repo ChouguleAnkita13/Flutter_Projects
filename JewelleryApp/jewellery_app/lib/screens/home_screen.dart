@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jewellery_app/screens/addtocart.dart';
-import 'package:jewellery_app/screens/categories.dart';
-import 'package:jewellery_app/screens/homepage.dart';
-import 'package:jewellery_app/screens/profilepage.dart';
-import 'package:jewellery_app/screens/your_order.dart';
+import 'package:jewellery_app/widgets/addtocart.dart';
+import 'package:jewellery_app/widgets/categories.dart';
+import 'package:jewellery_app/widgets/homepage.dart';
+import 'package:jewellery_app/widgets/profilepage.dart';
+import 'package:jewellery_app/widgets/your_order.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
