@@ -12,12 +12,13 @@ class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
     super.initState();
+
     dbConnection();
   }
 
   @override
   Widget build(BuildContext context) {
-     Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       // Navigate to the home screen
       Navigator.of(context).pushReplacementNamed("/homescreen");
     });

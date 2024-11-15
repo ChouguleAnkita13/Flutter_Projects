@@ -7,12 +7,14 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 import '../widgets/homepage.dart';
 import 'package:jewellery_app/screens/wishlist.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 // import 'package:jewellery_app/itemList/productlist.dart';
 
 dynamic database;
 
 Future<void> dbConnection() async {
+  databaseFactory = databaseFactoryFfiWeb;
   database = await openDatabase(
     join(await getDatabasesPath(), "jewelDB7.db"),
     version: 1,
@@ -79,8 +81,7 @@ Future<void> dbConnection() async {
   // print(signlist);
 
   //get data from cart table
-  cartList=await getAllCarts();
-
+  cartList = await getAllCarts();
 
   List<Map<String, dynamic>> productList = [];
 
@@ -203,13 +204,13 @@ Future<void> insertCart(AddToCartModel obj) async {
 
   await localDB.insert("Cart", obj.addToCartMap(),
       conflictAlgorithm: ConflictAlgorithm.replace);
-  cartList=await getAllCarts();
+  cartList = await getAllCarts();
 }
 
 //fetch data from Cart Table
 Future<List<AddToCartModel>> getAllCarts() async {
   final localDB = await database;
-  List<Map<String,dynamic>> list = await localDB.query("Cart");
+  List<Map<String, dynamic>> list = await localDB.query("Cart");
 
   return List.generate(list.length, (idx) {
     return AddToCartModel(
@@ -219,14 +220,11 @@ Future<List<AddToCartModel>> getAllCarts() async {
         price: list[idx]['price']);
   });
 }
+
 //delete data from cart
-Future<void> deleteCart(AddToCartModel obj)async{
+Future<void> deleteCart(AddToCartModel obj) async {
   final localDB = await database;
 
-  await localDB.delete(
-    'Cart',
-    where: "cartId=?",
-    whereArgs : [obj.cartId]
-  );
-  cartList=await getAllCarts();
+  await localDB.delete('Cart', where: "cartId=?", whereArgs: [obj.cartId]);
+  cartList = await getAllCarts();
 }
