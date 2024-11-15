@@ -1,12 +1,12 @@
 import 'package:jewellery_app/model/model.dart';
-import 'package:jewellery_app/widgets/addtocart.dart';
-import 'package:jewellery_app/screens/loginpage.dart';
-import 'package:jewellery_app/widgets/your_order.dart';
+import 'package:jewellery_app/view/widgets/addtocart.dart';
+import 'package:jewellery_app/view/screens/loginpage.dart';
+import 'package:jewellery_app/view/widgets/your_order.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
-import '../widgets/homepage.dart';
-import 'package:jewellery_app/screens/wishlist.dart';
+import '../view/widgets/homepage.dart';
+import 'package:jewellery_app/view/screens/wishlist.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 // import 'package:jewellery_app/itemList/productlist.dart';

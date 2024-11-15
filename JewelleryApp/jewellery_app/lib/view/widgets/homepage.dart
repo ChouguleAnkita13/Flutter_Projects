@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jewellery_app/screens/products.dart';
+import 'package:jewellery_app/view/screens/products.dart';
 
 List<Map<String, dynamic>> categoriesList = [];
 
