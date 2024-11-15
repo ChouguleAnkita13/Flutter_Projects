@@ -30,6 +30,7 @@ class _ProductListState extends State<ProductList> {
       appBar: AppBar(
         shadowColor: const Color.fromRGBO(0, 0, 0, 0.15),
         backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
+        surfaceTintColor: const Color.fromRGBO(247, 236, 219, 1),
         centerTitle: true,
         title: Text(
           widget.selectedType,
@@ -100,7 +101,8 @@ class _ProductListState extends State<ProductList> {
                             top: 5,
                             left: 130,
                             child: Container(
-                              height: 30, width: 30,
+                              height: 30,
+                              width: 30,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
                                 color: const Color.fromRGBO(254, 254, 254, 0.7),

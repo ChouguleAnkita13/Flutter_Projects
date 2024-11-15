@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
       appBar: AppBar(
           backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
+          surfaceTintColor: const Color.fromRGBO(247, 236, 219, 1),
           title: _selectedIndex == 0
               ? Image.asset(
                   "assets/images/logo.png",

@@ -26,14 +26,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.red),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        fixedSize: MaterialStateProperty.all<Size>(
+                        backgroundColor: WidgetStateProperty.all(Colors.red),
+                        foregroundColor: WidgetStateProperty.all(Colors.white),
+                        fixedSize: WidgetStateProperty.all<Size>(
                           const Size(190, 50),
                         ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 10), // Adjust the radius as needed
@@ -52,19 +50,18 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
+                        backgroundColor: WidgetStateProperty.all(
                             const Color.fromRGBO(247, 236, 219, 1)),
-                        foregroundColor: MaterialStateProperty.all(Colors.red),
-                        fixedSize: MaterialStateProperty.all<Size>(
+                        foregroundColor: WidgetStateProperty.all(Colors.red),
+                        fixedSize: WidgetStateProperty.all<Size>(
                           const Size(180, 50),
                         ),
-                        side: MaterialStateProperty.all<BorderSide>(
+                        side: WidgetStateProperty.all<BorderSide>(
                           const BorderSide(
                               color:
                                   Colors.red), // Set the border color and width
                         ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 10), // Adjust the radius as needed

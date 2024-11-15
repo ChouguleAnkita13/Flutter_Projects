@@ -21,6 +21,7 @@ class _WishListState extends State<WishList> {
       appBar: AppBar(
         shadowColor: const Color.fromRGBO(0, 0, 0, 0.15),
         backgroundColor: const Color.fromRGBO(247, 236, 219, 1),
+        surfaceTintColor: const Color.fromRGBO(247, 236, 219, 1),
         centerTitle: true,
         title: Text(
           "Your Wishlist",
